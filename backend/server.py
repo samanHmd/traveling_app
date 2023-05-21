@@ -14,4 +14,4 @@ api.add_resource(SignInController, '/register')
 api.add_resource(LoginController, '/login')     
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

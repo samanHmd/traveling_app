@@ -4,7 +4,7 @@ from flask_restful import Api, Resource
 
 class HomeController(Resource):
     def get(self):
-        return "Home Get"
+        return "Home Get git"
 
     def post(self):
-        return "Home Post"   
+        return "Home Post git"   
