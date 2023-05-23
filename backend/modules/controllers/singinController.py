@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_restful import Api, Resource, fields, marshal_with
 from modules.Models import User
-from modules import bcrypt, db
+from modules import bcrypt, db, app
 import jwt
 from datetime import datetime, timedelta
 
