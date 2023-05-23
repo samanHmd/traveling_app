@@ -2,6 +2,8 @@ from flask import Flask, request
 from flask_restful import Api, Resource, fields, marshal_with
 from modules.Models import User
 from modules import bcrypt, db
+import jwt
+from datetime import datetime, timedelta
 
 user_filed = {
     'id': fields.Integer,
@@ -31,6 +33,9 @@ class SignInController(Resource):
             return {'error': str(e)}, 400
         finally:
             db.session.commit()
-            return request.form, 200
+            user = User.query.filter_by(userName=request.form.get('userName')).first()
+            encoded_jwt = jwt.encode({'user_id':user.id, 'expiration': str(datetime.utcnow() + timedelta(seconds=172800))}, app.config['SECRET_KEY'], algorithm="HS256")
+            return {"status": "success","api_token": encoded_jwt}, 200
+            
 
         

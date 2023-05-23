@@ -13,7 +13,7 @@ class LoginController(Resource):
         return decoded_jwt
 
     def post(self):
-        user = User.query.filter_by(email=request.form.get('userName')).first()
+        user = User.query.filter_by(userName=request.form.get('userName')).first()
         print()
         if user and bcrypt.check_password_hash(user.password, request.form.get('password')):
             encoded_jwt = jwt.encode({'user_id':user.id, 'expiration': str(datetime.utcnow() + timedelta(seconds=172800))}, app.config['SECRET_KEY'], algorithm="HS256")
