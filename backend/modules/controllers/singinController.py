@@ -14,8 +14,7 @@ user_filed = {
 class SignInController(Resource):
     @marshal_with(user_filed)
     def get(self):
-        users = User.query.all()
-        return request.form, 200
+        return 'register post'
 
     def post(self):
         users = User.query.all()
