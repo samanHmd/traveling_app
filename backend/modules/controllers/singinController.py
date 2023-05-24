@@ -1,6 +1,6 @@
 from flask import Flask, request
-from flask_restful import Api, Resource, fields, marshal_with
-from modules.Models import User
+from flask_restful import Api, Resource, fields, marshal_with, marshal
+from modules.Models import User, Package
 from modules import bcrypt, db, app
 import jwt
 from datetime import datetime, timedelta
@@ -13,8 +13,48 @@ user_filed = {
     'password': fields.String,
 }
 
+
+flight_field = {
+    'id': fields.Integer,
+    'flightNumber': fields.String,
+    'departureTime': fields.DateTime,
+    'arrivalTime': fields.DateTime,
+    'departureLocation': fields.String,
+    'arrivalLocation': fields.String,
+    'price': fields.String,
+}
+
+
+
+hotel_field = {
+    'id': fields.Integer,
+    'hotelName': fields.String,
+    'checkInDate': fields.DateTime,
+    'checkOutDate': fields.DateTime,
+    'location': fields.String,
+    'pricePerNight': fields.String,
+}
+
+
+
+activity_field = {
+    'id': fields.Integer,
+    'activityName': fields.String,
+    'location': fields.String,
+    'price': fields.String,
+}
+
+package_field = {
+    'id': fields.Integer,
+    'packageName': fields.String,
+    'price': fields.Float,
+    'flights': fields.List(fields.Nested(flight_field), attribute=lambda x: x.get_flights()),
+    'hotels': fields.List(fields.Nested(hotel_field), attribute=lambda x: x.get_hotels()),
+    'activities': fields.List(fields.Nested(activity_field), attribute=lambda x: x.get_activities()),
+}
+
 class SignInController(Resource):
-    @marshal_with(user_filed)
+    @marshal_with(package_field)
     def get(self):
         users = User.query.all()
         return users
@@ -33,8 +73,9 @@ class SignInController(Resource):
         finally:
             db.session.commit()
             user = User.query.filter_by(userName=data.get('userName')).first()
+            packages = Package.query.all()
             encoded_jwt = jwt.encode({'user_id':user.id, 'expiration': str(datetime.utcnow() + timedelta(seconds=172800))}, app.config['SECRET_KEY'], algorithm="HS256")
-            return {"status": "success","api_token": encoded_jwt}, 200
+            return {"status": "success","api_token": encoded_jwt, "packages": marshal(packages, package_field)}, 200
             
 
         
