@@ -48,12 +48,12 @@ package_field = {
 }
 
 class PackageController(Resource):
-    @marshal_with(package_field)
+    #@marshal_with(package_field)
     def get(self):
-        packages = Package.query.all()
-        #db.drop_all()
-        #db.create_all()
-        return packages
+        #packages = Package.query.all()
+        db.drop_all()
+        db.create_all()
+        return 'packages'
         
 
     def post(self):
