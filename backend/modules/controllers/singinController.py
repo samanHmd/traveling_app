@@ -20,12 +20,11 @@ class SignInController(Resource):
         return users
 
     def post(self):
-        users = User.query.all()
-        print(users)
+        data = request.get_json()
         try:
-            password = request.form.get('password')
+            password = data.get('password')
             hashed = bcrypt.generate_password_hash(password).decode('utf-8')
-            user = User(name=request.form.get('name'), userName=request.form.get('userName'), email=request.form.get('email'), password=hashed)
+            user = User(name=data.get('name'), userName=data.get('userName'), email=data.get('email'), password=hashed)
             db.session.add(user)
         except Exception as e:
             print(str(e))
@@ -33,7 +32,7 @@ class SignInController(Resource):
             return {'error': str(e)}, 400
         finally:
             db.session.commit()
-            user = User.query.filter_by(userName=request.form.get('userName')).first()
+            user = User.query.filter_by(userName=data.get('userName')).first()
             encoded_jwt = jwt.encode({'user_id':user.id, 'expiration': str(datetime.utcnow() + timedelta(seconds=172800))}, app.config['SECRET_KEY'], algorithm="HS256")
             return {"status": "success","api_token": encoded_jwt}, 200
             

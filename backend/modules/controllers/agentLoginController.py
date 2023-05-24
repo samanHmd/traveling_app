@@ -11,9 +11,10 @@ class AgentLoginController(Resource):
         return "agent login get"
 
     def post(self):
-        agent = Agent.query.filter_by(userName=request.form.get('userName')).first()
+        data = request.get_json()
+        agent = Agent.query.filter_by(userName=data.get('userName')).first()
         print()
-        if agent and bcrypt.check_password_hash(agent.password, request.form.get('password')):
+        if agent and bcrypt.check_password_hash(agent.password, data.get('password')):
             encoded_jwt = jwt.encode({'user_id':agent.id, 'expiration': str(datetime.utcnow() + timedelta(seconds=172800))}, app.config['SECRET_KEY'], algorithm="HS256")
             return {"status": "success","api_token": encoded_jwt}, 200
         else:
