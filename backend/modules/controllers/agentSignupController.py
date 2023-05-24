@@ -18,7 +18,7 @@ class AgentSignupConroller(Resource):
             agent = Agent(name="agent", userName="agent", email="agent@mail.com", password=hashed)
             db.session.add(agent)
         except Exception as e:
-            print(str(e))
+            print(str(e)) 
             db.session.rollback()
             return {'error': str(e)}, 400
         finally:
