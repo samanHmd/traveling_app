@@ -1,0 +1,52 @@
+[
+  {
+    "packageId":1,
+    "destinationCity": "Paris",
+    "destinationCountry": "France",
+    "numberOfDays": 5,
+    "numberOfNights": 4,
+    "hotelName": "Eiffel Tower",
+    "price": 1200,
+    "activities": "breakfast"
+  },
+  {
+    "packageId":2,
+    "destinationCity": "New York",
+    "destinationCountry": "USA",
+    "numberOfDays": 7,
+    "numberOfNights": 6,
+    "hotelName": "Marriott Marquis",
+    "price": 2500,
+    "activities": "trasportation card"
+  },
+  {
+    "packageId":3,
+    "destinationCity": "Tokyo",
+    "destinationCountry": "Japan",
+    "numberOfDays": 10,
+    "numberOfNights": 9,
+    "hotelName": "Hilton Tokyo",
+    "price": 3500,
+    "activities": "discount on museums"
+  },
+  {
+    "packageId":4,
+    "destinationCity": "Dubai",
+    "destinationCountry": "UAE",
+    "numberOfDays": 6,
+    "numberOfNights": 5,
+    "hotelName": "Burj Al Arab",
+    "price": 1800,
+    "activities": "city tour"
+  },
+  {
+    "packageId":5,
+    "destinationCity": "Cancun",
+    "destinationCountry": "Mexico",
+    "numberOfDays": 8,
+    "numberOfNights": 7,
+    "hotelName": "Ritz-Carlton Cancun",
+    "price": 3000,
+    "activities": "breakfast"
+  }
+]
